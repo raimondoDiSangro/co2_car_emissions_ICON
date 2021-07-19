@@ -23,14 +23,14 @@ print(df.head())
 print(df.dtypes)
 # print(df.isnull().sum()) non vi sono elementi nulli
 
-#engine_size,cylinders,fuel_consumption_hwy,fuel_consumption_comb(l/100km),fuel_consumption_comb(mpg),co2_emissions
+# engine_size,cylinders,fuel_consumption_hwy,fuel_consumption_comb(l/100km),fuel_consumption_comb(mpg),co2_emissions
 
 # list(df.columns)
 # df.drop(labels=['car name'], axis=1, inplace=True)
 plt.figure(figsize=[14, 6])
 sns.barplot(x=df['fuel_type'], y=df['fuel_consumption_comb(l/100km)'])
 plt.title('Consumption Gallon by Years')
-#plt.show()
+# plt.show()
 # print(df.head())
 
 # Exploratory data Analysis visualization and analysis
@@ -48,17 +48,15 @@ plt.title('Consumption Gallon by Years')
 # plt.show()
 
 
-
 # print(df.corr('spearman'))
 
 
 # df['acceleration_power_ratio'] = df['acceleration'] / df['horsepower']
 
-df.drop(labels=['make', 'model', 'vehicle_class', 'transmission', 'fuel_type'], axis=1, inplace=True)
+df.drop(labels=['make', 'model', 'vehicle_class', 'transmission', 'fuel_type', 'fuel_consumption_comb(mpg)'], axis=1, inplace=True)
 
-
-y = df['fuel_consumption_city']
-df.drop('fuel_consumption_city', axis=1, inplace=True)
+y = df['co2_emissions']
+df.drop('co2_emissions', axis=1, inplace=True)
 print(df.head())
 
 X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.2, random_state=3)
@@ -66,7 +64,7 @@ model_pipe = Pipeline(steps=[('scaler', StandardScaler(),), ('lasso', LassoCV(),
 # model = Pipeline('scaler', StandardScaler())
 model_pipe.fit(X_train, y_train)
 prediction = model_pipe.predict(X_test)
-#print(prediction)
+# print(prediction)
 
 # print(X_test)
 # print(prediction)
@@ -80,7 +78,7 @@ print("lassoCV mean absolute error percentage",
       mean_absolute_percentage_error(y_test, prediction))  # 0.0 is the best
 
 # todo
-n_features = 6
+n_features = 5
 rng = np.random.RandomState(0)
 regr = make_pipeline(StandardScaler(), SVR(C=1.0, epsilon=0.2))
 regr.fit(X_train, y_train)
@@ -91,7 +89,7 @@ print("svr train accuracy", regr.score(X_train, y_train))
 print("svr train accuracy", regr.score(X_test, y_test))
 
 prediction = regr.predict(X_test)
-#print(prediction)
+# print(prediction)
 
 print("SVR mean absolute error:", mean_absolute_error(y_test, prediction))
 print("SVR r2 score:", r2_score(y_test, prediction))
@@ -102,17 +100,16 @@ print("SVR mean absolute error percentage",
 # cylinders,displacement,horsepower,weight,acceleration,model year,origin
 
 
-#engine_size,cylinders,fuel_consumption_hwy,fuel_consumption_comb(l/100km),fuel_consumption_comb(mpg),co2_emissions
-#make,model,vehicle_class,engine_size,cylinders,transmission,fuel_type,fuel_consumption_city,fuel_consumption_hwy,fuel_consumption_comb(l/100km),fuel_consumption_comb(mpg),co2_emissions
+# engine_size,cylinders,fuel_consumption_city, fuel_consumption_hwy,fuel_consumption_comb(l/100km)
+# make,model,vehicle_class,engine_size,cylinders,transmission,fuel_type,fuel_consumption_city,fuel_consumption_hwy,fuel_consumption_comb(l/100km),fuel_consumption_comb(mpg),co2_emissions
 # FIAT,500L,STATION WAGON - SMALL,1.4,4,M,X,9.3,7.1,8.3,34,194
 # 2,4,5.5,6.7,42,181
-#BMW,328d xDRIVE,COMPACT,2,4,A,D,7.6,5.5,6.7,42,181
-#FIAT,500L,STATION WAGON - SMALL,1.4,4,M,X,9.3,7.1,8.3,34,194
+# BMW,328d xDRIVE,COMPACT,2,4,A,D,7.6,5.5,6.7,42,181
+# FIAT,500L,STATION WAGON - SMALL,1.4,4,M,X,9.3,7.1,8.3,34,194
+# 1.4,4,9.3,7.1,8.3,34
 
-# input_data = (2,4,5.5,6.7,42,181) #7.6 expected
-input_data = (1.4,4,7.1,8.3,34,194) #9.3 ex
-
-
+input_data = (1.4,4,9.3,7.1,8.3) #exp. 194
+# input_data = (6.5, 12, 25.2, 14.1, 16.1)  # ferrari 812 superfast  340 pred.
 
 # change the input data to a numpy array
 input_data_as_numpy_array = np.asarray(input_data)
@@ -124,4 +121,3 @@ prediction = model_pipe.predict(input_data_reshaped)
 print(prediction)
 prediction = regr.predict(input_data_reshaped)
 print(prediction)
-
