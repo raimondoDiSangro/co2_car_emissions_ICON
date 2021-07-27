@@ -6,11 +6,18 @@ from sklearn.linear_model import LassoCV
 from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error, mean_absolute_percentage_error
 # test test
 # from sklearn.metrics import accuracy_score
+from sklearn.linear_model import LinearRegression
+
+from sklearn.preprocessing import (StandardScaler,
+                                   PolynomialFeatures)
+
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
+
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
 
 # from sklearn.model_selection import train_test_split
 # test test
@@ -29,7 +36,7 @@ print(df.dtypes)
 # df.drop(labels=['car name'], axis=1, inplace=True)
 plt.figure(figsize=[14, 6])
 sns.barplot(x=df['fuel_type'], y=df['fuel_consumption_comb(l/100km)'])
-plt.title('Consumption Gallon by Years')
+plt.title('Consumption Gallon by Fuel Type')
 # plt.show()
 # print(df.head())
 
@@ -39,10 +46,10 @@ plt.title('Consumption Gallon by Years')
 # plt.show()
 
 # Correlation
-# f, ax = plt.subplots(figsize=[14, 8])
-# sns.heatmap(df.corr(), annot=True, fmt=".2f")
-# ax.set_title("Correlation Matrix", fontsize=20)
-# plt.show()
+f, ax = plt.subplots(figsize=[14, 8])
+sns.heatmap(df.corr(), annot=True, fmt=".2f")
+ax.set_title("Correlation Matrix", fontsize=20)
+plt.show()
 
 # sns.pairplot(df, diag_kind='kde')
 # plt.show()
@@ -53,7 +60,9 @@ plt.title('Consumption Gallon by Years')
 
 # df['acceleration_power_ratio'] = df['acceleration'] / df['horsepower']
 
-df.drop(labels=['make', 'model', 'vehicle_class', 'transmission', 'fuel_type', 'fuel_consumption_comb(mpg)'], axis=1, inplace=True)
+
+df.drop(labels=['make', 'model', 'vehicle_class', 'transmission', 'fuel_type', 'fuel_consumption_comb(mpg)'], axis=1,
+        inplace=True)
 
 y = df['co2_emissions']
 df.drop('co2_emissions', axis=1, inplace=True)
@@ -99,7 +108,6 @@ print("SVR mean absolute error percentage",
 
 # cylinders,displacement,horsepower,weight,acceleration,model year,origin
 
-
 # engine_size,cylinders,fuel_consumption_city, fuel_consumption_hwy,fuel_consumption_comb(l/100km)
 # make,model,vehicle_class,engine_size,cylinders,transmission,fuel_type,fuel_consumption_city,fuel_consumption_hwy,fuel_consumption_comb(l/100km),fuel_consumption_comb(mpg),co2_emissions
 # FIAT,500L,STATION WAGON - SMALL,1.4,4,M,X,9.3,7.1,8.3,34,194
@@ -108,8 +116,9 @@ print("SVR mean absolute error percentage",
 # FIAT,500L,STATION WAGON - SMALL,1.4,4,M,X,9.3,7.1,8.3,34,194
 # 1.4,4,9.3,7.1,8.3,34
 
-input_data = (1.4,4,9.3,7.1,8.3) #exp. 194
+input_data = (1.4, 4, 9.3, 7.1, 8.3)  # exp. 194
 # input_data = (6.5, 12, 25.2, 14.1, 16.1)  # ferrari 812 superfast  340 pred.
+# input_data = (3.0, 6, 10, 8, 9)
 
 # change the input data to a numpy array
 input_data_as_numpy_array = np.asarray(input_data)
@@ -121,3 +130,21 @@ prediction = model_pipe.predict(input_data_reshaped)
 print(prediction)
 prediction = regr.predict(input_data_reshaped)
 print(prediction)
+
+kMeans = KMeans(n_clusters=3)
+kmodel = kMeans.fit(df)
+# print(kmodel.predict(df))
+
+distortions = []
+K = range(1, 10)
+for k in K:
+    kmeanModel = KMeans(n_clusters=k)
+    kmeanModel.fit(df)
+    distortions.append(kmeanModel.inertia_)
+
+plt.figure(figsize=(16, 8))
+plt.plot(K, distortions, 'bx-')
+plt.xlabel('k')
+plt.ylabel('Distortion')
+plt.title('The Elbow Method showing the optimal k')
+plt.show()
