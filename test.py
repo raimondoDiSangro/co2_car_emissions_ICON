@@ -2,6 +2,39 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.linear_model import LassoCV, LogisticRegression
+from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error, mean_absolute_percentage_error
+# test test
+# from sklearn.metrics import accuracy_score
+from sklearn.linear_model import LinearRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neural_network import MLPClassifier
+
+from sklearn.preprocessing import (StandardScaler,
+                                   PolynomialFeatures)
+
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.pipeline import make_pipeline
+from sklearn.svm import SVR
+from sklearn.tree import DecisionTreeClassifier
+
+from source.data_analysis import pair_plot
+from source.data_analysis import correlation_heatmap
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+
+import pandas as pd
+
+import tkinter as tk
+from tkinter import messagebox
+from source.classification_models import svr_model, kneigh_model, decision_tree_model
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import seaborn as sns
 from sklearn.linear_model import LassoCV
 from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error, mean_absolute_percentage_error
 # test test
@@ -17,14 +50,19 @@ from sklearn.pipeline import make_pipeline
 from sklearn.svm import SVR
 
 from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
+
+# from source.bayesian_network import bayesianNetwork
+# from source.clustering import kMeansCluster
+
+
+# engine_size,cylinders,fuel_consumption_city, fuel_consumption_hwy,fuel_consumption_comb(l/100km)
 
 # from sklearn.model_selection import train_test_split
 # test test
 
 df = pd.read_csv('data/co2_emissions.csv')
-
 pd.set_option('display.max_columns', None)  # show all the columns
+
 print(df.describe())
 print(df.head())
 print(df.dtypes)
@@ -49,7 +87,7 @@ plt.title('Consumption Gallon by Fuel Type')
 f, ax = plt.subplots(figsize=[14, 8])
 sns.heatmap(df.corr(), annot=True, fmt=".2f")
 ax.set_title("Correlation Matrix", fontsize=20)
-plt.show()
+# plt.show()
 
 # sns.pairplot(df, diag_kind='kde')
 # plt.show()
@@ -68,7 +106,8 @@ y = df['co2_emissions']
 df.drop('co2_emissions', axis=1, inplace=True)
 print(df.head())
 
-X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.2, random_state=3)
+X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.2, random_state=0)
+
 model_pipe = Pipeline(steps=[('scaler', StandardScaler(),), ('lasso', LassoCV(),)])
 # model = Pipeline('scaler', StandardScaler())
 model_pipe.fit(X_train, y_train)
@@ -87,8 +126,10 @@ print("lassoCV mean absolute error percentage",
       mean_absolute_percentage_error(y_test, prediction))  # 0.0 is the best
 
 # todo
-n_features = 5
-rng = np.random.RandomState(0)
+# n_features = 5
+n_features = 3
+#rng = np.random.RandomState(0)
+regr = np.random.RandomState(0)
 regr = make_pipeline(StandardScaler(), SVR(C=1.0, epsilon=0.2))
 regr.fit(X_train, y_train)
 Pipeline(steps=[('standardscaler', StandardScaler()),
@@ -116,9 +157,14 @@ print("SVR mean absolute error percentage",
 # FIAT,500L,STATION WAGON - SMALL,1.4,4,M,X,9.3,7.1,8.3,34,194
 # 1.4,4,9.3,7.1,8.3,34
 
-input_data = (1.4, 4, 9.3, 7.1, 8.3)  # exp. 194
+#input_data = (1.4, 4, 9.3, 7.1, 8.3)  # exp. 194
 # input_data = (6.5, 12, 25.2, 14.1, 16.1)  # ferrari 812 superfast  340 pred.
 # input_data = (3.0, 6, 10, 8, 9)
+
+# engine_size,cylinders,fuel_consumption_comb(l/100km)
+# input_data = (1.4, 4, 8.3)  # exp. 194
+
+input_data = [1.4, 4, 9.3, 7.1, 8.3]  # exp. 194
 
 # change the input data to a numpy array
 input_data_as_numpy_array = np.asarray(input_data)
@@ -147,4 +193,8 @@ plt.plot(K, distortions, 'bx-')
 plt.xlabel('k')
 plt.ylabel('Distortion')
 plt.title('The Elbow Method showing the optimal k')
-plt.show()
+#plt.show()
+
+
+
+

@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from sklearn import metrics
 from sklearn.linear_model import LassoCV
 from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error, mean_absolute_percentage_error
 # test test
@@ -18,6 +19,10 @@ from sklearn.svm import SVR
 
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
+
+from sklearn.cluster import DBSCAN # To instantiate and fit the model
+from sklearn.metrics import pairwise_distances # For Model evaluation
+from sklearn.neighbors import NearestNeighbors # For Hyperparameter Tuning
 
 # from sklearn.model_selection import train_test_split
 # test test
@@ -72,7 +77,7 @@ scaled_array = scaler.fit_transform(df)
 scaled_dataframe = pd.DataFrame( scaled_array, columns = df.columns )
 plt.figure(figsize = (15,4))
 sns.boxplot(data = scaled_dataframe, orient = "h")
-plt.show()
+#plt.show()
 
 print(scaled_dataframe.describe())
 
@@ -80,10 +85,60 @@ y = df['co2_emissions']
 df.drop('co2_emissions', axis=1, inplace=True)
 # print(df.head())
 
+# kmeans_model = KMeans(n_clusters = 3) #3 da elbow
+# kmeans_model.fit(scaled_dataframe)
+# centroids = kmeans_model.cluster_centers_
+# print(centroids)
+# print(kmeans_model.cluster_centers_.shape)
 
-kmeans_model = KMeans(n_clusters = 3) #3 da elbow
-kmeans_model.fit(scaled_dataframe)
-centroids = kmeans_model.cluster_centers_
-print(centroids)
-print(kmeans_model.cluster_centers_.shape)
+# print(kmeans_model.labels_)
+# df["cluster"] = kmeans_model.labels_
+
+# print(df)
+
+dbscan_model = DBSCAN( eps = 0.75, min_samples = 5)
+
+dbscan_model.fit(scaled_dataframe)
+
+labels = dbscan_model.labels_
+
+print(labels)
+
+df["LABEL"] = labels
+
+print(df.head(250))
+print(df.describe())
+
+fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize = (13,8))
+
+# sns.scatterplot(x = "engine_size", y = "cylinders", data = df, hue = "LABEL", palette = "Accent", ax = ax1)
+# sns.scatterplot(x = "fuel_consumption_comb(l/100km)", y = "engine_size", data = df, hue = "LABEL", palette = "Accent", ax = ax2)
+# sns.scatterplot(x = "fuel_consumption_comb(l/100km)", y = "cylinders", data = df, hue = "LABEL", palette = "Accent", ax = ax3)
+# sns.scatterplot(x = "fuel_consumption_comb(l/100km)", y = "WIDTH", data = df, hue = "LABEL", palette = "Accent", ax = ax4)
+
+plt.tight_layout()
+plt.show()
+
+
+# k_to_test = range(2, 25, 1)  # [2,3,4, ..., 24]
+# silhouette_scores = {}
+
+# for k in k_to_test:
+#     model_kmeans_k = KMeans(n_clusters=k)
+#     model_kmeans_k.fit(scaled_dataframe)
+#    labels_k = model_kmeans_k.labels_
+#     score_k = metrics.silhouette_score(scaled_dataframe, labels_k)
+#     silhouette_scores[k] = score_k
+#     print("Tested kMeans with k = %d\tSS: %5.4f" % (k, score_k))
+
+# print("Done!")
+
+# plt.figure(figsize = (16,5))
+# plt.plot(silhouette_scores.values())
+# plt.xticks(range(0,23,1), silhouette_scores.keys())
+# plt.title("Silhouette Metric")
+# plt.xlabel("k")
+# plt.ylabel("Silhouette")
+# plt.axvline(1, color = "r")
+# plt.show()
 
