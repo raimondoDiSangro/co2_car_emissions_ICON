@@ -194,7 +194,3 @@ plt.xlabel('k')
 plt.ylabel('Distortion')
 plt.title('The Elbow Method showing the optimal k')
 #plt.show()
-
-
-
-

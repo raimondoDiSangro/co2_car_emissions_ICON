@@ -28,9 +28,9 @@ class Dialogue(tk.Frame):
         # top.rowconfigure(0, weight=1)
         # top.columnconfigure(0, weight=1)
 
-        for i in range(12):
-            self.rowconfigure(i, weight=1)
-            self.columnconfigure(1, weight=1)
+        #for i in range(12):
+        #    self.rowconfigure(i, weight=1)
+        #    self.columnconfigure(1, weight=1)
 
         self.label1 = tk.Label(self, text="Engine size in liters (es 1.4):")  # engine size label
         self.label1.grid(column=0, row=0, sticky=tk.W, padx=5, pady=5)
@@ -62,22 +62,22 @@ class Dialogue(tk.Frame):
         self.input5 = tk.Entry(self)  # fuel_consumption_comb input
         self.input5.grid(column=1, row=4, sticky=tk.E, padx=5, pady=5)
 
-        self.label6 = tk.Label(self, text="<- Predicted Emissions")  # label of emissions
-        self.label6.grid(column=3, row=5, sticky=tk.W, padx=5, pady=5)
+        self.label6 = tk.Label(self, text="Predicted Emissions ->")  # label of emissions
+        self.label6.grid(column=0, row=5, sticky=tk.W, padx=5, pady=5)
 
-        self.label6 = tk.Label(self, text="<- Similar cars")  # label similar cars
-        self.label6.grid(column=3, row=7, sticky=tk.W, padx=5, pady=5)
+        self.label6 = tk.Label(self, text="Similar cars ->")  # label similar cars
+        self.label6.grid(column=0, row=7, sticky=tk.W, padx=5, pady=5)
 
         self.button1 = tk.Button(self, text="Prediction", command=self.input_compute)
-        self.button1.grid(column=1, row=5, sticky=tk.E, padx=5, pady=5)
+        self.button1.grid(column=2, row=3, sticky=tk.E, padx=5, pady=5)
         self.button2 = tk.Button(self, text="Reset", command=self.reset)
-        self.button2.grid(column=0, row=5, sticky=tk.E, padx=5, pady=5)
+        self.button2.grid(column=2, row=1, sticky=tk.E, padx=5, pady=5)
 
         self.regression_result = tk.Text(self, height=10, width=50)
-        self.regression_result.grid(column=2, row=5, sticky=tk.E, padx=5, pady=5)
+        self.regression_result.grid(column=1, row=5, sticky=tk.E, padx=5, pady=5)
 
         self.kmeans_result = tk.Text(self, height=20, width=50)
-        self.kmeans_result.grid(column=2, row=7, sticky=tk.E, padx=5, pady=5)
+        self.kmeans_result.grid(column=1, row=7, sticky=tk.E, padx=5, pady=5)
 
     def input_compute(self):
         message = 0
