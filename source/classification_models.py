@@ -5,12 +5,11 @@ from sklearn.linear_model import LogisticRegression
 
 from sklearn.neighbors import KNeighborsClassifier
 
-
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.pipeline import make_pipeline
-#from sklearn.svm import SVR
+# from sklearn.svm import SVR
 from sklearn.svm import LinearSVR
 
 # support vector regression
@@ -57,7 +56,7 @@ def kneigh_model(df, input_data):
 
     X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.25, random_state=0, shuffle=1)
 
-    Kneighbors = KNeighborsClassifier()
+    Kneighbors = KNeighborsClassifier(n_neighbors=10)
 
     Kneighbors.fit(X_train, y_train)
     input_data_as_numpy_array = np.asarray(input_data)
@@ -87,5 +86,3 @@ def decision_tree_model(df, input_data):
     prediction = decision_tree.predict(input_data_reshaped)
 
     return prediction
-
-

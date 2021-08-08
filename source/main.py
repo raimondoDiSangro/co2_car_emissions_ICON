@@ -28,7 +28,7 @@ class Dialogue(tk.Frame):
         # top.rowconfigure(0, weight=1)
         # top.columnconfigure(0, weight=1)
 
-        #for i in range(12):
+        # for i in range(12):
         #    self.rowconfigure(i, weight=1)
         #    self.columnconfigure(1, weight=1)
 
@@ -161,7 +161,7 @@ class Dialogue(tk.Frame):
         if feature == "engine_size":
             try:
                 float(number)
-                if float(number) > 10 or float(number) <= 0.5:
+                if float(number) > 10 or float(number) < 0.5:
                     self.reset()
                     message = 1
                     check = 1
@@ -201,8 +201,6 @@ class Dialogue(tk.Frame):
         elif message == 2:
             messagebox.showerror("INVALID INPUT", "Please insert only numerical values")
         return check
-
-
 
     def reset(self):
         self.regression_result.delete("1.0", "end")
