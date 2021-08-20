@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 # from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error, mean_absolute_percentage_error
 
-from sklearn.neighbors import KNeighborsClassifier
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
@@ -40,31 +40,17 @@ def svr_model(df, input_data):
 
     # reshape the numpy array as we are predicting for only on instance
     input_data_reshaped = input_data_as_numpy_array.reshape(1, -1)
-    prediction = regr.predict(input_data_reshaped)
+    prediction = int(regr.predict(input_data_reshaped))
+
+    # uncomment to print the test and train accuracies
+    # print("svr train accuracy", regr.score(X_train, y_train))
+    # print("svr TEST accuracy", regr.score(X_test, y_test))
+
 
     return prediction
 
 
-def kneigh_model(df, input_data):
-    df.drop(labels=['make', 'model', 'vehicle_class', 'transmission', 'fuel_type', 'fuel_consumption_comb(mpg)'],
-            axis=1,
-            inplace=True)
 
-    y = df['co2_emissions']
-    df.drop('co2_emissions', axis=1, inplace=True)
-    # print(df.head())
-
-    X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.25, random_state=0, shuffle=1)
-
-    Kneighbors = KNeighborsClassifier(n_neighbors=10)
-
-    Kneighbors.fit(X_train, y_train)
-    input_data_as_numpy_array = np.asarray(input_data)
-
-    input_data_reshaped = input_data_as_numpy_array.reshape(1, -1)
-    prediction = Kneighbors.predict(input_data_reshaped)
-
-    return prediction
 
 
 def decision_tree_model(df, input_data):
@@ -84,5 +70,9 @@ def decision_tree_model(df, input_data):
 
     input_data_reshaped = input_data_as_numpy_array.reshape(1, -1)
     prediction = decision_tree.predict(input_data_reshaped)
+
+    # uncomment to print the test and train accuracies
+    # print("Decision tree train accuracy", decision_tree.score(X_train, y_train))
+    # print("Decision tree TEST accuracy", decision_tree.score(X_test, y_test))
 
     return prediction

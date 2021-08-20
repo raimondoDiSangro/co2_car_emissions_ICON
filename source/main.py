@@ -1,21 +1,21 @@
 import pandas as pd
 import tkinter as tk
 from tkinter import messagebox
-from source.classification_models import svr_model, kneigh_model, decision_tree_model
+from tkinter.scrolledtext import *
+from source.models import svr_model, decision_tree_model
+from source.clustering import clusterkMeans
 
-# engine_size,cylinders,fuel_consumption_city, fuel_consumption_hwy,fuel_consumption_comb(l/100km)
-
-cars_cat_kmeans = ['engine_size', 'cylinders', 'fuel_consumption_city', 'fuel_consumption_hwy',
-                   'fuel_consumption_comb(l/100km)']
+cars_cat_kmeans = ['make', 'model', 'engine_size', 'cylinders',
+                   'fuel_consumption_city', 'fuel_consumption_hwy', 'fuel_consumption_comb', 'co2_emissions']
 
 
 class Dialogue(tk.Frame):
     def __init__(self):
         self.engine_size = 0
         self.cylinders = 0
-        self.fuel_city = 0
-        self.fuel_hwy = 0
-        self.fuel_comb = 0
+        self.fuel_consumption_city = 0
+        self.fuel_consumption_hwy = 0
+        self.fuel_consumption_comb = 0
         self.cars_df = pd.read_csv('../data/co2_emissions.csv')
 
         tk.Frame.__init__(self)
@@ -28,9 +28,9 @@ class Dialogue(tk.Frame):
         # top.rowconfigure(0, weight=1)
         # top.columnconfigure(0, weight=1)
 
-        # for i in range(12):
-        #    self.rowconfigure(i, weight=1)
-        #    self.columnconfigure(1, weight=1)
+        for i in range(12):
+            self.rowconfigure(i, weight=1)
+            self.columnconfigure(1, weight=1)
 
         self.label1 = tk.Label(self, text="Engine size in liters (es 1.4):")  # engine size label
         self.label1.grid(column=0, row=0, sticky=tk.W, padx=5, pady=5)
@@ -76,7 +76,9 @@ class Dialogue(tk.Frame):
         self.regression_result = tk.Text(self, height=10, width=50)
         self.regression_result.grid(column=1, row=5, sticky=tk.E, padx=5, pady=5)
 
-        self.kmeans_result = tk.Text(self, height=20, width=50)
+        # self.kmeans_result = tk.Text(self, height=20, width=50)
+        self.kmeans_result = ScrolledText(self, height=20, width=48)
+
         self.kmeans_result.grid(column=1, row=7, sticky=tk.E, padx=5, pady=5)
 
     def input_compute(self):
@@ -85,9 +87,9 @@ class Dialogue(tk.Frame):
         input_data = []  #
 
         self.regression_result.delete("1.0", "end")
+        self.kmeans_result.delete("1.0", "end")
         # self.kmeans_result.delete("1.0", "end")
-        # self.kmeans_result.delete("1.0", "end")
-        # engine_size,cylinders,fuel_consumption_city, fuel_consumption_hwy,fuel_consumption_comb(l/100km)
+        # engine_size,cylinders,fuel_consumption_city, fuel_consumption_hwy,fuel_consumption_comb
 
         if len(self.input1.get()) != 0:
             input_check = self.checkInput("engine_size", self.input1.get())
@@ -106,52 +108,67 @@ class Dialogue(tk.Frame):
             input_data.append(self.cylinders)
 
         if len(self.input3.get()) != 0:
-            input_check = self.checkInput("fuel city", self.input3.get())
+            input_check = self.checkInput("fuel_consumption_city", self.input3.get())
         else:
             message = 1
         if (input_check == 0) and (message == 0):
-            self.fuel_city = float(self.input3.get())
-            input_data.append(self.fuel_city)
+            self.fuel_consumption_city = float(self.input3.get())
+            input_data.append(self.fuel_consumption_city)
 
         if len(self.input4.get()) != 0:
-            input_check = self.checkInput("fuel highway", self.input4.get())
+            input_check = self.checkInput("fuel_consumption_hwy", self.input4.get())
         else:
             message = 1
         if (input_check == 0) and (message == 0):
-            self.fuel_hwy = float(self.input4.get())
-            input_data.append(self.fuel_hwy)
+            self.fuel_consumption_hwy = float(self.input4.get())
+            input_data.append(self.fuel_consumption_hwy)
 
         if len(self.input5.get()) != 0:
-            input_check = self.checkInput("fuel comb", self.input5.get())
+            input_check = self.checkInput("fuel_consumption_comb", self.input5.get())
         else:
             message = 1
         if (input_check == 0) and (message == 0):
-            self.fuel_comb = float(self.input5.get())
-            input_data.append(self.fuel_comb)
+            self.fuel_consumption_comb = float(self.input5.get())
+            input_data.append(self.fuel_consumption_comb)
         else:
             message = 1
 
         if (message == 1) and (input_check == 0):
             messagebox.showerror("Error", "Please insert all the values required")
 
-        # for clustering values = {'engine_size': self.engine_size, 'cylinders': self.cylinders, 'fuel_city':
-        # self.fuel_city, 'fuel_hwy': self.fuel_city, 'fuel_comb': self.fuel_comb}
+        # cars_cat_kmeans = ['make', 'model', 'engine_size', 'cylinders', 'fuel_consumption_city',
+        # 'fuel_consumption_hwy', 'fuel_consumption_comb']
+
+        # values = {'engine_size': self.engine_size, 'cylinders': self.cylinders, 'fuel_consumption_city':
+        # self.fuel_consumption_city, 'fuel_consumption_hwy': self.fuel_consumption_hwy, 'fuel_consumption_comb':
+        # self.fuel_consumption_comb}
 
         if (input_check == 0) and (message == 0):
             svr_result = str(svr_model(self.cars_df, input_data))
             self.cars_df = pd.read_csv('../data/co2_emissions.csv')
 
+            float_svr_result = (svr_model(self.cars_df, input_data))
+            self.cars_df = pd.read_csv('../data/co2_emissions.csv')
+
             decision_tree_result = str(decision_tree_model(self.cars_df, input_data))
             self.cars_df = pd.read_csv('../data/co2_emissions.csv')
 
-            kneigh_result = str(kneigh_model(self.cars_df, input_data))
             self.cars_df = pd.read_csv('../data/co2_emissions.csv')
 
-            self.regression_result.insert(tk.END, "Svr result:" + svr_result + "g/km\n")
+            self.regression_result.insert(tk.END, "Svr result: " + svr_result + "g/km\n")
             self.regression_result.insert(tk.END, "Decision Tree result:" + decision_tree_result + "g/km\n")
-            self.regression_result.insert(tk.END, "Kneighbor result result:" + kneigh_result + "g/km\n")
+
+            values = {'engine_size': self.engine_size, 'cylinders': self.cylinders,
+                      'fuel_consumption_city': self.fuel_consumption_city,
+                      'fuel_consumption_hwy': self.fuel_consumption_hwy,
+                      'fuel_consumption_comb': self.fuel_consumption_comb,
+                      'co2_emissions': float_svr_result}
 
             # print(result)
+            # self.cars_df = pd.read_csv('../data/co2_emissions.csv')
+
+            result_kmeans = clusterkMeans(self.cars_df, cars_cat_kmeans, values)
+            self.kmeans_result.insert(tk.END, result_kmeans)
             self.cars_df = pd.read_csv('../data/co2_emissions.csv')
 
     def checkInput(self, feature, number):
@@ -204,7 +221,7 @@ class Dialogue(tk.Frame):
 
     def reset(self):
         self.regression_result.delete("1.0", "end")
-        # self.kmeans_result.delete("1.0", "end")
+        self.kmeans_result.delete("1.0", "end")
         self.input1.delete(0, "end")
         self.input2.delete(0, "end")
         self.input3.delete(0, "end")
