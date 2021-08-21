@@ -28,8 +28,8 @@ Inoltre, in base alle caratteristiche tecniche inserite, il sistema mostrerà al
 
 
 
-### Requisiti
-- librerie ```numpy```, ```sklearn```, ```pandas```, ```seaborn```
+### Librerie Utilizzate
+- ```numpy```, ```sklearn```, ```pandas```, ```seaborn```
 
 ### Struttura
 - il progetto è strutturato in questa maniera, all'interno della directory ```source```:
