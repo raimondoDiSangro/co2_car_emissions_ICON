@@ -9,7 +9,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.pipeline import make_pipeline
-# from sklearn.svm import SVR
+from sklearn.svm import SVR
 from sklearn.svm import LinearSVR
 
 # support vector regression
@@ -29,6 +29,8 @@ def svr_model(df, input_data):
 
     # regr = make_pipeline(StandardScaler(), SVR(C=1.0, epsilon=0.2))
     regr = LinearSVR(max_iter=10000)
+    #regr = SVR(max_iter=5000)
+
     regr.fit(X_train, y_train)
     # Pipeline(steps=[('standardscaler', StandardScaler()),
     #                ('svr', SVR(epsilon=0.2))])
