@@ -13,10 +13,6 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import (StandardScaler,
                                    PolynomialFeatures)
 
-# from source.bayesian_network import bayesiannetwork
-# from source.clustering import kmeanscluster
-
-
 # engine_size,cylinders,fuel_consumption_city, fuel_consumption_hwy,fuel_consumption_comb(l/100km)
 
 # from sklearn.model_selection import train_test_split

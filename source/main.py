@@ -2,7 +2,7 @@ import pandas as pd
 import tkinter as tk
 from tkinter import messagebox
 from tkinter.scrolledtext import *
-from source.models import svr_model, decision_tree_model
+from source.models import svr_model, decision_tree_model, rfr_model
 from source.clustering import clusterkMeans
 
 cars_cat_kmeans = ['make', 'model', 'engine_size', 'cylinders',
@@ -153,16 +153,23 @@ class Dialogue(tk.Frame):
             decision_tree_result = str(decision_tree_model(self.cars_df, input_data))
             self.cars_df = pd.read_csv('../data/co2_emissions.csv')
 
+            random_forest_result= str(rfr_model(self.cars_df, input_data))
             self.cars_df = pd.read_csv('../data/co2_emissions.csv')
 
-            self.regression_result.insert(tk.END, "Svr result: " + svr_result + "g/km\n")
-            self.regression_result.insert(tk.END, "Decision Tree result:" + decision_tree_result + "g/km\n")
+            float_forest_result = (rfr_model(self.cars_df, input_data))
+            self.cars_df = pd.read_csv('../data/co2_emissions.csv')
+
+            #self.regression_result.insert(tk.END, "Svr result: " + svr_result + "g/km\n")
+            #self.regression_result.insert(tk.END, "Decision Tree result:" + decision_tree_result + "g/km\n")
+            self.regression_result.insert(tk.END, "Forest Tree result: " + random_forest_result + "g/km\n")
+
 
             values = {'engine_size': self.engine_size, 'cylinders': self.cylinders,
                       'fuel_consumption_city': self.fuel_consumption_city,
                       'fuel_consumption_hwy': self.fuel_consumption_hwy,
                       'fuel_consumption_comb': self.fuel_consumption_comb,
-                      'co2_emissions': float_svr_result}
+                      #'co2_emissions': float_svr_result
+                      'co2_emissions': float_forest_result}
 
             # print(result)
             # self.cars_df = pd.read_csv('../data/co2_emissions.csv')
