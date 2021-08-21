@@ -35,4 +35,4 @@ Inoltre, in base alle caratteristiche tecniche inserite, il sistema mostrerà al
 - il progetto è strutturato in questa maniera, all'interno della directory ```source```:
   1. ```main.py``` consente l'avvio del programma e lancia l'interfaccia grafica con cui l'utente può inserire i dati;
   2. ```models.py``` ospita i modelli di classificazione per effettuare la predizione delle emissioni di co2 di una vettura con date caratteristiche;
-- la directory ```data``` ospita il dataset utilizzato, in formato ```.csv```;
+- la directory ```data``` ospita il dataset utilizzato, in formato ```.csv```
