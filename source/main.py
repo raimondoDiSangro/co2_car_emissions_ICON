@@ -166,9 +166,14 @@ class Dialogue(tk.Frame):
 
             # print(result)
             # self.cars_df = pd.read_csv('../data/co2_emissions.csv')
-
             result_kmeans = clusterkMeans(self.cars_df, cars_cat_kmeans, values)
-            self.kmeans_result.insert(tk.END, result_kmeans)
+
+            if len(result_kmeans) == 0:  # stampa messaggio d'errore se i valori in input non hanno prodotto risultati
+                self.kmeans_result.insert(tk.END, "No Similar cars found in the dataset,\nplease insert new data")
+            else:  # stampo i risultati
+                self.kmeans_result.insert(tk.END, result_kmeans)
+                self.cars_df = pd.read_csv('../data/co2_emissions.csv')
+
             self.cars_df = pd.read_csv('../data/co2_emissions.csv')
 
     def checkInput(self, feature, number):

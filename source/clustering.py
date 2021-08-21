@@ -8,19 +8,19 @@ warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
 N_CLUSTER = 330
 
-def categorizationkMeans(df, col_list):
+def categorizationkMeans(df, columns_list):
 
     output = ""
     # scaler = StandardScaler()
     # scaler.fit_transform(data[col_list])
     # data[col_list] = scaler.transform(data[col_list])
-    clist = []
-    for elem in col_list:
-        clist.append(elem)
-    clist.remove('make')
-    clist.remove('model')
+    col_list = []
+    for elem in columns_list:
+        col_list.append(elem)
+    col_list.remove('make')
+    col_list.remove('model')
     kMeans_model = KMeans(n_clusters=N_CLUSTER, random_state=0)
-    df['cluster'] = kMeans_model.fit_predict(df[clist])
+    df['cluster'] = kMeans_model.fit_predict(df[col_list])
     records = df[df['cluster'] == df['cluster'].iloc[-1]]
     for index, row in records.iterrows():
         if index != -1:

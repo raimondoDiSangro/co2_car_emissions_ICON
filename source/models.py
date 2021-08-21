@@ -1,15 +1,8 @@
 import numpy as np
-import pandas as pd
 # from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error, mean_absolute_percentage_error
 
 
-from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
-from sklearn.pipeline import Pipeline
-from sklearn.pipeline import make_pipeline
-from sklearn.svm import SVR
 from sklearn.svm import LinearSVR
 
 # support vector regression
@@ -29,7 +22,7 @@ def svr_model(df, input_data):
 
     # regr = make_pipeline(StandardScaler(), SVR(C=1.0, epsilon=0.2))
     regr = LinearSVR(max_iter=10000)
-    #regr = SVR(max_iter=5000)
+    # regr = SVR(max_iter=5000)
 
     regr.fit(X_train, y_train)
     # Pipeline(steps=[('standardscaler', StandardScaler()),
@@ -48,11 +41,7 @@ def svr_model(df, input_data):
     # print("svr train accuracy", regr.score(X_train, y_train))
     # print("svr TEST accuracy", regr.score(X_test, y_test))
 
-
     return prediction
-
-
-
 
 
 def decision_tree_model(df, input_data):
