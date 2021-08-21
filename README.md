@@ -1,7 +1,9 @@
 # Car Co2 emissions ICON
 
 ### Descrizione
-
+Il sistema, dotato di interfaccia grafica, permette l'inserimento e l'analisi di alcune caratteristiche di un'automobile (Cilindrata, Numero di Cilindri, Consumi),
+per stimare il valore di emissioni della vettura in oggetto.
+Inoltre, in base alle caratteristiche tecniche inserite, il sistema mostrerà all'utente una serie di vetture con caratteristiche simili presenti nel dataset a disposizione.
 
 ### Dataset
 - I dati a disposizione contengono specifiche tecniche di una serie di automobili.
