@@ -144,31 +144,30 @@ class Dialogue(tk.Frame):
         # self.fuel_consumption_comb}
 
         if (input_check == 0) and (message == 0):
-            svr_result = str(svr_model(self.cars_df, input_data))
-            self.cars_df = pd.read_csv('../data/co2_emissions.csv')
+            # svr_result = str(svr_model(self.cars_df, input_data))
+            # self.cars_df = pd.read_csv('../data/co2_emissions.csv')
 
-            float_svr_result = (svr_model(self.cars_df, input_data))
-            self.cars_df = pd.read_csv('../data/co2_emissions.csv')
+            # float_svr_result = (svr_model(self.cars_df, input_data))
+            # self.cars_df = pd.read_csv('../data/co2_emissions.csv')
 
-            decision_tree_result = str(decision_tree_model(self.cars_df, input_data))
-            self.cars_df = pd.read_csv('../data/co2_emissions.csv')
+            # decision_tree_result = str(decision_tree_model(self.cars_df, input_data))
+            # self.cars_df = pd.read_csv('../data/co2_emissions.csv')
 
-            random_forest_result= str(rfr_model(self.cars_df, input_data))
+            random_forest_result = str(rfr_model(self.cars_df, input_data))
             self.cars_df = pd.read_csv('../data/co2_emissions.csv')
 
             float_forest_result = (rfr_model(self.cars_df, input_data))
             self.cars_df = pd.read_csv('../data/co2_emissions.csv')
 
-            #self.regression_result.insert(tk.END, "Svr result: " + svr_result + "g/km\n")
-            #self.regression_result.insert(tk.END, "Decision Tree result:" + decision_tree_result + "g/km\n")
+            # self.regression_result.insert(tk.END, "Svr result: " + svr_result + "g/km\n")
+            # self.regression_result.insert(tk.END, "Decision Tree result:" + decision_tree_result + "g/km\n")
             self.regression_result.insert(tk.END, "Forest Tree result: " + random_forest_result + "g/km\n")
-
 
             values = {'engine_size': self.engine_size, 'cylinders': self.cylinders,
                       'fuel_consumption_city': self.fuel_consumption_city,
                       'fuel_consumption_hwy': self.fuel_consumption_hwy,
                       'fuel_consumption_comb': self.fuel_consumption_comb,
-                      #'co2_emissions': float_svr_result
+                      # 'co2_emissions': float_svr_result
                       'co2_emissions': float_forest_result}
 
             # print(result)

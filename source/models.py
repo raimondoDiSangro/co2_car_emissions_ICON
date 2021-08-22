@@ -80,7 +80,7 @@ def rfr_model(df, input_data):
 
     X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.25, random_state=0, shuffle=1)
 
-    regr = RandomForestRegressor(random_state=0, n_estimators=150)
+    regr = RandomForestRegressor(random_state=0, max_depth=8)
     # regr = SVR(max_iter=5000)
 
     regr.fit(X_train, y_train)
