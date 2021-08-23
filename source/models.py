@@ -8,6 +8,8 @@ from sklearn.svm import LinearSVR
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 
+from sklearn.model_selection import cross_val_score, GridSearchCV
+from sklearn.preprocessing import MinMaxScaler
 
 def svr_model(df, input_data):
     df.drop(labels=['make', 'model', 'vehicle_class', 'transmission', 'fuel_type', 'fuel_consumption_comb(mpg)'],
@@ -74,14 +76,15 @@ def rfr_model(df, input_data):
             axis=1,
             inplace=True)
 
+
     y = df['co2_emissions']
     df.drop('co2_emissions', axis=1, inplace=True)
     # print(df.head())
-
     X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.25, random_state=0, shuffle=1)
 
-    regr = RandomForestRegressor(random_state=0, max_depth=8)
-    # regr = SVR(max_iter=5000)
+
+    regr = RandomForestRegressor(max_depth=7, n_estimators=100,
+                                random_state=False, verbose=False)  # Perform K-Fold CV
 
     regr.fit(X_train, y_train)
 

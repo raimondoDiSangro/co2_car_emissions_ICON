@@ -6,8 +6,8 @@ from pandas.core.common import SettingWithCopyWarning
 warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
 
-N_CLUSTER = 330
-
+#Elbow score = 46
+N_CLUSTER = 46
 def categorizationkMeans(df, columns_list):
 
     output = ""

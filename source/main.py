@@ -156,7 +156,8 @@ class Dialogue(tk.Frame):
             random_forest_result = str(rfr_model(self.cars_df, input_data))
             self.cars_df = pd.read_csv('../data/co2_emissions.csv')
 
-            float_forest_result = (rfr_model(self.cars_df, input_data))
+            #float_forest_result = (rfr_model(self.cars_df, input_data))
+            float_forest_result = int(random_forest_result)
             self.cars_df = pd.read_csv('../data/co2_emissions.csv')
 
             # self.regression_result.insert(tk.END, "Svr result: " + svr_result + "g/km\n")
