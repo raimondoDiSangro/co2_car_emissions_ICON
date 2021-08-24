@@ -2,16 +2,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from sklearn.ensemble import RandomForestRegressor
-from yellowbrick.cluster import KElbowVisualizer, SilhouetteVisualizer
 from sklearn.cluster import KMeans
-
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import cross_val_score, GridSearchCV
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
+from yellowbrick.cluster import KElbowVisualizer
+
 # test test
 # from sklearn.metrics import accuracy_score
-
-from sklearn.model_selection import train_test_split
 
 # engine_size,cylinders,fuel_consumption_city, fuel_consumption_hwy,fuel_consumption_comb(l/100km)
 
@@ -19,13 +17,13 @@ from sklearn.model_selection import train_test_split
 # test test
 
 df = pd.read_csv('data/co2_emissions.csv')
-#pd.set_option('display.max_columns', none)  # show all the columns
+# pd.set_option('display.max_columns', none)  # show all the columns
 
 print(df.describe())
 print(df.head())
 print(df.dtypes)
 print(df.duplicated().sum())
-#df.drop_duplicates(inplace=true)
+# df.drop_duplicates(inplace=true)
 print(df.duplicated().sum())
 
 # print(df.isnull().sum()) non vi sono elementi nulli
@@ -40,21 +38,20 @@ print(df.duplicated().sum())
 # plt.show()
 # print(df.head())
 df.drop(labels=['make', 'model', 'vehicle_class', 'transmission', 'fuel_type', 'fuel_consumption_comb(mpg)'],
-            axis=1,
-            inplace=True)
-
+        axis=1,
+        inplace=True)
 
 y = df['co2_emissions']
 df.drop('co2_emissions', axis=1, inplace=True)
 # print(df.head())
 X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.25, random_state=0, shuffle=1)
 
+# determining the best k value with the elbow method
 model = KMeans()
-visualizer = KElbowVisualizer(model, k=(4,400))
+visualizer = KElbowVisualizer(model, k=(4, 400))
 
-visualizer.fit(X_train)    # Fit the data to the visualizer
-visualizer.show()    # Draw/show/poof the data
-
+visualizer.fit(X_train)  # Fit the data to the visualizer
+visualizer.show()  # Draw/show/poof the data
 
 # exploratory data analysis visualization and analysis
 # plt.figure(figsize=(10, 8))
@@ -107,7 +104,6 @@ def rfr_model(df, input_data):
             axis=1,
             inplace=True)
 
-
     gsc = GridSearchCV(
         estimator=RandomForestRegressor(),
         param_grid={
@@ -121,22 +117,20 @@ def rfr_model(df, input_data):
     # print(df.head())
     X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.25, random_state=0, shuffle=1)
 
-
     grid_result = gsc.fit(X_train, y_train)
     best_params = grid_result.best_params_
 
     regr = RandomForestRegressor(max_depth=best_params["max_depth"], n_estimators=best_params["n_estimators"],
-                                random_state=False, verbose=False)  # Perform K-Fold CV
-
+                                 random_state=False, verbose=False)  # Perform K-Fold CV
 
     scores = cross_val_score(regr, X_train, y_train, cv=10, scoring='neg_mean_absolute_error')
     print(scores)
     print(best_params["max_depth"])
     print(best_params["n_estimators"])
 
-    #X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.25, random_state=0, shuffle=1)
+    # X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.25, random_state=0, shuffle=1)
 
-    #regr = RandomForestRegressor(random_state=0, max_depth=8)
+    # regr = RandomForestRegressor(random_state=0, max_depth=8)
     # regr = SVR(max_iter=5000)
 
     regr.fit(X_train, y_train)
