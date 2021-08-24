@@ -12,9 +12,7 @@ N_CLUSTER = 46
 
 def categorizationkMeans(df, columns_list):
     output = ""
-    # scaler = StandardScaler()
-    # scaler.fit_transform(data[col_list])
-    # data[col_list] = scaler.transform(data[col_list])
+
     col_list = []
     for elem in columns_list:
         col_list.append(elem)
@@ -48,9 +46,7 @@ def clusterkMeans(df, columns_list, values):
         else:
             new_column.append(np.nan)
 
-    # X = df[col_list]
-    # X.loc[-1] = new_col
-    # output = categorizationkMeans(df, col_list)
+
     X = df[columns_list]
     X.loc[-1] = new_column
     output = categorizationkMeans(X, columns_list)
