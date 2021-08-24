@@ -5,6 +5,7 @@ from tkinter.scrolledtext import *
 from source.models import svr_model, decision_tree_model, rfr_model
 from source.clustering import clusterkMeans
 
+# the car categories to be used in the K-means
 cars_cat_kmeans = ['make', 'model', 'engine_size', 'cylinders',
                    'fuel_consumption_city', 'fuel_consumption_hwy', 'fuel_consumption_comb', 'co2_emissions']
 
@@ -23,15 +24,11 @@ class Dialogue(tk.Frame):
         self.master.minsize(550, 450)
         self.grid(sticky=tk.E + tk.W + tk.N + tk.S)
 
-        # resizable window
-        # top = self.winfo_toplevel()
-        # top.rowconfigure(0, weight=1)
-        # top.columnconfigure(0, weight=1)
-
         for i in range(12):
             self.rowconfigure(i, weight=1)
             self.columnconfigure(1, weight=1)
 
+        # labels naming and association with the right colum and row
         self.label1 = tk.Label(self, text="Engine size in liters (es 1.4):")  # engine size label
         self.label1.grid(column=0, row=0, sticky=tk.W, padx=5, pady=5)
 
@@ -62,12 +59,16 @@ class Dialogue(tk.Frame):
         self.input5 = tk.Entry(self)  # fuel_consumption_comb input
         self.input5.grid(column=1, row=4, sticky=tk.E, padx=5, pady=5)
 
+        # text area that will show the predicted emissions
         self.label6 = tk.Label(self, text="Predicted Emissions ->")  # label of emissions
         self.label6.grid(column=0, row=5, sticky=tk.W, padx=5, pady=5)
 
+        # text area that will show the similar cars
         self.label6 = tk.Label(self, text="Similar cars ->")  # label similar cars
         self.label6.grid(column=0, row=7, sticky=tk.W, padx=5, pady=5)
 
+        # buttons to perform the actions, predictions will launch "input_compute"
+        # in order to start the system predictions, reset will clear the input fields
         self.button1 = tk.Button(self, text="Prediction", command=self.input_compute)
         self.button1.grid(column=2, row=3, sticky=tk.E, padx=5, pady=5)
         self.button2 = tk.Button(self, text="Reset", command=self.reset)
@@ -164,6 +165,8 @@ class Dialogue(tk.Frame):
             # self.regression_result.insert(tk.END, "Decision Tree result:" + decision_tree_result + "g/km\n")
             self.regression_result.insert(tk.END, "Forest Tree result: " + random_forest_result + "g/km\n")
 
+            # gathering the values to be passed to the k-means algorithm
+            # to cluster the dataset searching for similar cars
             values = {'engine_size': self.engine_size, 'cylinders': self.cylinders,
                       'fuel_consumption_city': self.fuel_consumption_city,
                       'fuel_consumption_hwy': self.fuel_consumption_hwy,
@@ -187,6 +190,8 @@ class Dialogue(tk.Frame):
         check = 0
         message = 0
 
+        # checking the engine size, if more than 10 liters or less than 0.5
+        # it can't be considered to be an engine sized for a car
         if feature == "engine_size":
             try:
                 float(number)
@@ -199,6 +204,8 @@ class Dialogue(tk.Frame):
                 message = 2
                 check = 1
 
+        # checking the number of cylinders of a car less than 2 or more than 16
+        # makes the numer of cylinders not suitable for a car
         if feature == "cylinders":
             try:
                 float(number)
@@ -211,11 +218,13 @@ class Dialogue(tk.Frame):
                 message = 2
                 check = 1
 
+        # checking the car consumption of the car, the fuel consumptions
+        # must be less than 99 and more than 0
         if (feature == "fuel city" or feature == "fuel hwy"
                 or feature == "fuel comb"):
             try:
                 float(number)
-                if float(number) > 99 or float(number) < 0:
+                if float(number) > 99 or float(number) <= 0:
                     self.reset()
                     message = 1
                     check = 1
@@ -231,6 +240,7 @@ class Dialogue(tk.Frame):
             messagebox.showerror("INVALID INPUT", "Please insert only numerical values")
         return check
 
+    # operations to be performed if the reset button is used
     def reset(self):
         self.regression_result.delete("1.0", "end")
         self.kmeans_result.delete("1.0", "end")
