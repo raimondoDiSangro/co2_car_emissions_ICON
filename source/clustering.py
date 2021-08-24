@@ -24,9 +24,6 @@ def categorizationkMeans(df, columns_list):
         if index != -1:
             output += str(row['make']) + ' '
             output += str(row['model']) + ' \n'
-            # print(output)
-            # 'fuel_consumption_city', 'fuel_consumption_hwy',
-            #                   'fuel_consumption_comb'
             output += 'engine size ' + str(row['engine_size']) + ', \n'
             output += 'cylinders ' + str(row['cylinders']) + ', \n'
             output += 'fuel consumption city ' + str(round(row['fuel_consumption_city'], 2)) + ', \n'
@@ -37,7 +34,7 @@ def categorizationkMeans(df, columns_list):
     return output
 
 
-def clusterkMeans(df, columns_list, values):
+def cluster_kMeans(df, columns_list, values):
     new_column = []
     for col in columns_list:
         if col in values:

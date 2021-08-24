@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter.scrolledtext import *
 from source.models import svr_model, decision_tree_model, rfr_model
-from source.clustering import clusterkMeans
+from source.clustering import cluster_kMeans
 
 # the car categories to be used in the K-means
 cars_cat_kmeans = ['make', 'model', 'engine_size', 'cylinders',
@@ -85,13 +85,12 @@ class Dialogue(tk.Frame):
     def input_compute(self):
         message = 0
         input_check = 1
-        input_data = []  #
+        input_data = []
 
         self.regression_result.delete("1.0", "end")
         self.kmeans_result.delete("1.0", "end")
-        # self.kmeans_result.delete("1.0", "end")
-        # engine_size,cylinders,fuel_consumption_city, fuel_consumption_hwy,fuel_consumption_comb
 
+        # checking the length of the input
         if len(self.input1.get()) != 0:
             input_check = self.checkInput("engine_size", self.input1.get())
         else:
@@ -163,7 +162,7 @@ class Dialogue(tk.Frame):
 
             # self.regression_result.insert(tk.END, "Svr result: " + svr_result + "g/km\n")
             # self.regression_result.insert(tk.END, "Decision Tree result:" + decision_tree_result + "g/km\n")
-            self.regression_result.insert(tk.END, "Forest Tree result: " + random_forest_result + "g/km\n")
+            self.regression_result.insert(tk.END, random_forest_result + "g/km\n")
 
             # gathering the values to be passed to the k-means algorithm
             # to cluster the dataset searching for similar cars
@@ -174,9 +173,8 @@ class Dialogue(tk.Frame):
                       # 'co2_emissions': float_svr_result
                       'co2_emissions': float_forest_result}
 
-            # print(result)
             # self.cars_df = pd.read_csv('../data/co2_emissions.csv')
-            result_kmeans = clusterkMeans(self.cars_df, cars_cat_kmeans, values)
+            result_kmeans = cluster_kMeans(self.cars_df, cars_cat_kmeans, values)
 
             if len(result_kmeans) == 0:  # prints an error message if there are no similar cars in the dataset
                 self.kmeans_result.insert(tk.END, "No Similar cars found in the dataset,\nplease insert new data")
