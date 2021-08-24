@@ -33,9 +33,9 @@ def categorizationkMeans(df, columns_list):
     col_list.remove('model')
     kMeans_model = KMeans(n_clusters=N_CLUSTER, random_state=0)
     df['cluster'] = kMeans_model.fit_predict(df[col_list])
-    records = df[df['cluster'] == df['cluster'].iloc[-1]]
+    new_data_frame = df[df['cluster'] == df['cluster'].iloc[-1]]
     # iteration over the dataframe rows
-    for index, row in records.iterrows():
+    for index, row in new_data_frame.iterrows():
         if index != -1:
             output += str(row['make']) + ' '
             output += str(row['model']) + ' \n'
