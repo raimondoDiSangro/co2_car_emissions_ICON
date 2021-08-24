@@ -1,9 +1,11 @@
-import pandas as pd
 import tkinter as tk
 from tkinter import messagebox
 from tkinter.scrolledtext import *
-from source.models import svr_model, decision_tree_model, rfr_model
+
+import pandas as pd
+
 from source.clustering import cluster_kMeans
+from source.models import rfr_model
 
 # the car categories to be used in the K-means
 cars_cat_kmeans = ['make', 'model', 'engine_size', 'cylinders',
