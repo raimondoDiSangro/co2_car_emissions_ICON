@@ -7,7 +7,7 @@ from sklearn.svm import LinearSVR
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 
-
+# used for testing
 def svr_model(df, input_data):
     df.drop(labels=['make', 'model', 'vehicle_class', 'transmission', 'fuel_type', 'fuel_consumption_comb(mpg)'],
             axis=1,
@@ -22,7 +22,6 @@ def svr_model(df, input_data):
     regr = LinearSVR(max_iter=10000)
 
     regr.fit(X_train, y_train)
-    # input_data = [1.4, 4, 9.3, 7.1, 8.3]  # exp. 194
 
     # change the input data to a numpy array
     input_data_as_numpy_array = np.asarray(input_data)
@@ -37,7 +36,7 @@ def svr_model(df, input_data):
 
     return prediction
 
-
+# used for testing
 def decision_tree_model(df, input_data):
     df.drop(labels=['make', 'model', 'vehicle_class', 'transmission', 'fuel_type', 'fuel_consumption_comb(mpg)'],
             axis=1,
@@ -74,11 +73,9 @@ def rfr_model(df, input_data):
     X_train, X_test, y_train, y_test = train_test_split(df, y, test_size=0.25, random_state=0, shuffle=1)
 
     regr = RandomForestRegressor(max_depth=7, n_estimators=100,
-                                 random_state=False, verbose=False)  # Perform K-Fold CV
+                                 random_state=False, verbose=False)
 
     regr.fit(X_train, y_train)
-
-    # input_data = [1.4, 4, 9.3, 7.1, 8.3]  # exp. 194
 
     # change the input data to a numpy array
     input_data_as_numpy_array = np.asarray(input_data)
