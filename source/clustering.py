@@ -10,6 +10,20 @@ warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 N_CLUSTER = 46
 
 
+def cluster_kMeans(df, columns_list, values):
+    new_column = []
+    for col in columns_list:
+        if col in values:
+            new_column.append(values[col])
+        else:
+            new_column.append(np.nan)
+
+    X = df[columns_list]
+    X.loc[-1] = new_column
+    output = categorizationkMeans(X, columns_list)
+    return output
+
+
 def categorizationkMeans(df, columns_list):
     output = ""
     col_list = []
@@ -34,15 +48,3 @@ def categorizationkMeans(df, columns_list):
     return output
 
 
-def cluster_kMeans(df, columns_list, values):
-    new_column = []
-    for col in columns_list:
-        if col in values:
-            new_column.append(values[col])
-        else:
-            new_column.append(np.nan)
-
-    X = df[columns_list]
-    X.loc[-1] = new_column
-    output = categorizationkMeans(X, columns_list)
-    return output
