@@ -6,13 +6,12 @@ from pandas.core.common import SettingWithCopyWarning
 
 warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
-# Elbow score = 46
+# Elbow score determined in the initial testing phase
 N_CLUSTER = 46
 
 
 def categorizationkMeans(df, columns_list):
     output = ""
-
     col_list = []
     for elem in columns_list:
         col_list.append(elem)
@@ -45,7 +44,6 @@ def clusterkMeans(df, columns_list, values):
             new_column.append(values[col])
         else:
             new_column.append(np.nan)
-
 
     X = df[columns_list]
     X.loc[-1] = new_column
