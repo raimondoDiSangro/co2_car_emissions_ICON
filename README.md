@@ -29,7 +29,7 @@ Inoltre, in base alle caratteristiche tecniche inserite, il sistema mostrerà al
 
 
 ### Librerie Utilizzate
-- ```numpy```, ```sklearn```, ```pandas```, ```seaborn```
+- ```numpy```, ```sklearn```, ```pandas```, ```seaborn```, ```yellowbrick```
 
 ### Struttura
 - il progetto è strutturato in questa maniera, all'interno della directory ```source```:
