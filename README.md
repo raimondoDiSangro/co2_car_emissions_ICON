@@ -37,3 +37,18 @@ Inoltre, in base alle caratteristiche tecniche inserite, il sistema mostrerà al
   2. ```models.py``` ospita i modelli di classificazione per effettuare la predizione delle emissioni di co2 di una vettura con date caratteristiche;
   3. ```clustering.py``` ospita i modelli per effettuare il clustering del dataset e restituire le vetture simili;
 - la directory ```data``` ospita il dataset utilizzato, in formato ```.csv```
+
+
+### DISCLAIMER PER STUDENTI UNIBA (E NON SOLO...)
+Questo progetto, tra l'altro per certi versi molto simile ad altri progetti realizzati da altri studenti per il corso di Ingegneria della Conoscenza, non è stato un grande successo in fase di valutazione finale.
+
+Il mio personale consiglio per questo esame è quello di approcciarlo in due modi diversi:
+1. Dedicarsi anima e corpo per realizzare un sistema che sia originale, sperando anche che sia gradito dal Professore, preparando la teoria in maniera pressoché perfetta (per quanto gli strumenti a disposizione per farlo non siano stati eccelsi, almeno nel periodo in cui ho frequentato io), con il rischio di non veder ripagato in fase di valutazione il lavoro monstre alle spalle;
+2. Proporre un progetto simile a questo, senza pretese di assoluta originalità, del quale però dovrete almeno essere in grado di spiegare le scelte tecniche effettuate.
+
+Francamente, la scelta che ho fatto personalmente, è stata una sorta via di mezzo tra le due, in quanto avrei voluto fare un buon esame, dato il mio interesse verso questa materia. Purtroppo però, credo che fra mancanze di tempo, problemi personali e onestamente un corso soporifero, seppure completo di argomenti, questo non è stato possibile.
+Quindi ho dovuto mettere da parte una preparazione perfetta e una totale originalità di progetto.
+Il risultato è stato il seguente: la mia peggiore valutazione della carriera universitaria, del quale non vado assolutamente fiero.
+
+Tutto questo per dire, che potete prendere spunto, idee o quant'altro da questo progetto, così come ho fatto io con altri progetti simili, con la consapevolezza del fatto che i risultati finali potrebbero non essere eccelsi.
+Tanto vi dovevo.
