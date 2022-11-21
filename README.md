@@ -51,4 +51,4 @@ Quindi ho dovuto mettere da parte una preparazione perfetta e una totale origina
 Il risultato è stato il seguente: la mia peggiore valutazione della carriera universitaria, del quale non vado assolutamente fiero.
 
 Tutto questo per dire, che potete prendere spunto, idee o quant'altro da questo progetto, così come ho fatto io con altri progetti simili, con la consapevolezza del fatto che i risultati finali potrebbero non essere eccelsi.
-Tanto vi dovevo.
+
